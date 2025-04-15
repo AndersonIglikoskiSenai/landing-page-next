@@ -4,7 +4,7 @@ import { handleSelectAll, handleDelete, handleUpdate } from "@/app/utilities/han
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Trash2, FileEdit, ClipboardEdit } from "lucide-react";
-import * as Dialog  from "@radix-ui/react-dialog";
+import * as Dialog from "@radix-ui/react-dialog";
 
 interface User {
     id: string;
@@ -57,7 +57,7 @@ export default function Users() {
     }
 
     const editingUser = async (user: User) => {
-       setSelectedUser(user);  
+        setSelectedUser(user);
     }
 
     const editUser = async (id: string) => {
@@ -101,38 +101,68 @@ export default function Users() {
                                     <div className=" gap-4 flex items-center">
                                         <Dialog.Root>
                                             <Dialog.Trigger asChild>
-                                                <ClipboardEdit className="w-4 h-4 text-blue-600 hover:text-blue-900 cursor-pointer" 
-                                                onClick={() => editingUser(user)} />
-                                                Editar
+                                                <button className="flex items-center gap-2">
+                                                    <ClipboardEdit className="w-4 h-4 text-blue-600 hover:text-blue-900 cursor-pointer" />
+                                                    <span>Editar</span>
+                                                </button>
                                             </Dialog.Trigger>
                                             <Dialog.Portal>
                                                 <Dialog.Overlay className="fixed inset-0 bg-black/30" />
                                                 <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg">
                                                     <Dialog.Title className="text-lg font-bold">Editar Usuário</Dialog.Title>
                                                     <form onSubmit={(e) => { e.preventDefault(); editUser(user.id) }}>
-                                                       <input type="text" placeholder="Nome" className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
-                                                        value={user.nome} 
-                                                        onChange={(e) => 
-                                                        setSelectedUser({ ...selectedUser!, nome: e.target.value })} required /> 
-                                                        <input type="email" placeholder="Email" className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
-                                                        value={user.email}
-                                                        onChange={(e) =>
-                                                        setSelectedUser({ ...selectedUser!, email: e.target.value })} required />
-                                                        <input type="text" placeholder="CPF" className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
-                                                        value={user.cpf}
-                                                        onChange={(e) =>
-                                                        setSelectedUser({ ...selectedUser!, cpf: e.target.value })} required />
-                                                        <input type="text" placeholder="Telefone" className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
-                                                        value={user.telefone}
-                                                        onChange={(e) =>
-                                                        setSelectedUser({ ...selectedUser!, telefone: e.target.value })} required />
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Nome"
+                                                            className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
+                                                            value={selectedUser?.nome || ""}
+                                                            onChange={(e) =>
+                                                                setSelectedUser({ ...selectedUser!, nome: e.target.value })
+                                                            }
+                                                            required
+                                                        />
+                                                        <input
+                                                            type="email"
+                                                            placeholder="Email"
+                                                            className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
+                                                            value={selectedUser?.email || ""}
+                                                            onChange={(e) =>
+                                                                setSelectedUser({ ...selectedUser!, email: e.target.value })
+                                                            }
+                                                            required
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            placeholder="CPF"
+                                                            className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
+                                                            value={selectedUser?.cpf || ""}
+                                                            onChange={(e) =>
+                                                                setSelectedUser({ ...selectedUser!, cpf: e.target.value })
+                                                            }
+                                                            required
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Telefone"
+                                                            className="border-2 border-blue-900 rounded p-2 mb-4 w-full"
+                                                            value={selectedUser?.telefone || ""}
+                                                            onChange={(e) =>
+                                                                setSelectedUser({ ...selectedUser!, telefone: e.target.value })
+                                                            }
+                                                        />
+                                                        <button
+                                                            type="submit"
+                                                            className="bg-blue-900 text-white rounded p-2 mt-4 w-full"
+                                                        >
+                                                            Salvar
+                                                        </button>
                                                     </form>
                                                 </Dialog.Content>
                                             </Dialog.Portal>
                                         </Dialog.Root>
 
                                         <button className="text-red-600 hover:text-red-900 ml-2"
-                                        onClick={() => DeleteUser(user.id)}>
+                                            onClick={() => DeleteUser(user.id)}>
                                             <Trash2 className="w-4 h-4" />Deletar</button>
                                     </div>
                                 </td>
